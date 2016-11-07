@@ -2,16 +2,20 @@
 
 require_once('connectdb.php');
  
-$app->get('/aluno/{ra}', function($request) {
+$app->get('/prova/{idAluno}', function($request) {
     
     
-    $ra = $request->getAttribute('ra');
+    $idAluno = $request->getAttribute('idAluno');
 
-    $query = "SELECT ALUNO.ID_ALUNO, PESSOA.P_NOME, PESSOA.S_NOME 
-              FROM ALUNO
-              INNER JOIN PESSOA
-              ON ALUNO.PESSOA_ID_PESSOA=PESSOA.ID_PESSOA
-              WHERE ALUNO.RA = '$ra'";
+    $query = "SELECT PROVA.ID_PROVA, PROVA.NOTA, MATERIA.MATERIA, FALTAS.FALTAS, BIMESTRE.BIMESTRE
+              FROM PROVA
+              INNER JOIN MATERIA
+              ON PROVA.MATERIA_ID_MATERIA = MATERIA.ID_MATERIA
+              INNER JOIN BIMESTRE
+              ON PROVA.BIMESTRE_ID_BIMESTRE = BIMESTRE.ID_BIMESTRE
+              INNER JOIN FALTAS
+              ON PROVA.MATERIA_ID_MATERIA = FALTAS.MATERIA_ID_MATERIA
+              WHERE PROVA.ALUNO_ID_ALUNO = '$idAluno'";
     
     $connection = connect_db();
     mysqli_set_charset($connection, "utf8");
@@ -21,7 +25,7 @@ $app->get('/aluno/{ra}', function($request) {
    
     while($row = $result->fetch_assoc()){
 
-        $data['aluno'][] = $row;
+        $data['provas'][] = $row;
 
         
         

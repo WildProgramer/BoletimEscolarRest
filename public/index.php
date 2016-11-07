@@ -7,6 +7,7 @@ require '../vendor/autoload.php';
 $app = new \Slim\App;
 
 require_once('../api/login.php');
+require_once('../api/prova.php');
 
 
 
