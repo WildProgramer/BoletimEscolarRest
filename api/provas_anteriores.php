@@ -2,10 +2,12 @@
 
 require_once('connectdb.php');
  
-$app->get('/prova/{idAluno}', function($request) {
+$app->get('/anterior/{idAluno}/{bimestre}/{ano}', function($request) {
     
     
     $idAluno = $request->getAttribute('idAluno');
+    $bimestre = $request->getAttribute('bimestre');
+    $ano = $request->getAttribute('ano');
 
     $query = "SELECT PROVA.ID_PROVA, PROVA.NOTA, MATERIA.MATERIA, FALTAS.FALTAS, BIMESTRE.BIMESTRE, DATA.DATA
               FROM PROVA
@@ -17,8 +19,7 @@ $app->get('/prova/{idAluno}', function($request) {
               ON PROVA.ID_PROVA = FALTAS.PROVA_ID_PROVA
 			  INNER JOIN DATA
 			  ON PROVA.DATA_ID_DATA = DATA.ID_DATA
-              WHERE PROVA.ALUNO_ID_ALUNO = '$idAluno'
-			  ORDER BY DATA.DATA DESC LIMIT 10";
+              WHERE PROVA.ALUNO_ID_ALUNO = '$idAluno' AND BIMESTRE.BIMESTRE = '$bimestre' AND BIMESTRE.ANO ='$ano'";
     
     $connection = connect_db();
     mysqli_set_charset($connection, "utf8");

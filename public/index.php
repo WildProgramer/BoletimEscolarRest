@@ -10,6 +10,8 @@ require_once('../api/login.php');
 require_once('../api/prova.php');
 require_once('../api/exame.php');
 require_once('../api/token.php');
+require_once('../api/databimestre.php');
+require_once('../api/provas_anteriores.php');
 
 
 
